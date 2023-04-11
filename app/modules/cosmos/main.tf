@@ -8,6 +8,14 @@ resource "azurerm_cosmosdb_account" "db" {
   enable_free_tier = true
   ip_range_filter  = "0.0.0.0,79.85.156.31"
 
+  capabilities {
+    name = ""
+  }
+
+  capacity {
+    total_throughput_limit = 1000
+  }
+
   geo_location {
     failover_priority = 0
     location          = var.location

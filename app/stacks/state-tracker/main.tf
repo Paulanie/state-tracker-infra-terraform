@@ -7,7 +7,7 @@ module "functionapp_storage" {
   source = "../../modules/storageaccount"
 
   location            = var.location
-  name                = "functionappstorage"
+  name                = "statetrackerapp"
   resource_group_name = azurerm_resource_group.state_tracker.name
 }
 
