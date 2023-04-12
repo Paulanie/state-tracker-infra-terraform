@@ -25,7 +25,21 @@ resource "azurerm_linux_function_app" "function_app" {
     }
   }
 
-  app_settings = {
-
+  identity {
+    type = "SystemAssigned"
   }
+
+  app_settings = var.app_settings
+}
+
+resource "azurerm_key_vault_access_policy" "function_app_keyvault_access" {
+  count = var.keyvault_id != null ? 1 : 0
+
+  key_vault_id = var.keyvault_id
+  tenant_id    = azurerm_linux_function_app.function_app.identity[0].tenant_id
+  object_id    = azurerm_linux_function_app.function_app.identity[0].principal_id
+
+  secret_permissions = [
+    "Get",
+  ]
 }

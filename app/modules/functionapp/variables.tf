@@ -22,5 +22,11 @@ variable "storage_access_key" {
 }
 
 variable "keyvault_id" {
-  type = string
+  type    = string
+  default = null
+}
+
+variable "app_settings" {
+  type    = map(string)
+  default = {}
 }

@@ -28,6 +28,10 @@ module "functionapp" {
   storage_access_key  = module.functionapp_storage.storage_access_key
   storage_name        = module.functionapp_storage.storage_name
   keyvault_id         = module.keyvault.keyvault_id
+
+  app_settings = {
+    AMENDMENTS_URL ="@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.secret["amendements-url"].versionless_id}/)"
+  }
 }
 
 module "cosmosdb" {
