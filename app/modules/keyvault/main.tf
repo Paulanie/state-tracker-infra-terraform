@@ -10,21 +10,22 @@ resource "azurerm_key_vault" "keyvault" {
   purge_protection_enabled    = false
 
   sku_name = "standard"
+}
 
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
+resource "azurerm_key_vault_access_policy" "main_access" {
+  key_vault_id = azurerm_key_vault.keyvault.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_client_config.current.object_id
 
-    key_permissions = [
-      "Get", "Backup", "Create", "List", "Purge", "Recover", "Restore", "Delete"
-    ]
+  key_permissions = [
+    "Get", "Backup", "Create", "List", "Purge", "Recover", "Restore", "Delete"
+  ]
 
-    secret_permissions = [
-      "Get", "Backup", "List", "Purge", "Recover", "Restore", "Delete", "Set"
-    ]
+  secret_permissions = [
+    "Get", "Backup", "List", "Purge", "Recover", "Restore", "Delete", "Set"
+  ]
 
-    storage_permissions = [
-      "Get", "Backup", "List", "Purge", "Recover", "Restore", "Delete", "Set", "Update"
-    ]
-  }
+  storage_permissions = [
+    "Get", "Backup", "List", "Purge", "Recover", "Restore", "Delete", "Set", "Update"
+  ]
 }

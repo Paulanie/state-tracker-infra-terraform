@@ -30,7 +30,8 @@ module "functionapp" {
   keyvault_id         = module.keyvault.keyvault_id
 
   app_settings = {
-    AMENDMENTS_URL ="@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.secret["amendements-url"].versionless_id}/)"
+    AMENDMENTS_URL = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.raw_secret["amendements-url"].versionless_id}/)"
+    COSMOS_ACCOUNT_CONNECTION_STRING = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmosdb_connection_string_secret.versionless_id}/)"
   }
 }
 
