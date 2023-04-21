@@ -30,7 +30,7 @@ module "functionapp" {
   keyvault_id         = module.keyvault.keyvault_id
 
   app_settings = {
-    AMENDMENTS_URL = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.raw_secret["amendements-url"].versionless_id}/)"
+    AMENDMENTS_URL                   = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.raw_secret["amendements-url"].versionless_id}/)"
     COSMOS_ACCOUNT_CONNECTION_STRING = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmosdb_connection_string_secret.versionless_id}/)"
   }
 }
@@ -40,4 +40,22 @@ module "cosmosdb" {
   location            = var.location
   name                = var.project_name
   resource_group_name = azurerm_resource_group.state_tracker.name
+}
+
+module "mssql" {
+  source              = "../../modules/mssql"
+  location            = var.location
+  key_vault_id        = module.keyvault.keyvault_id
+  server_name         = var.project_name
+  resource_group_name = azurerm_resource_group.state_tracker.name
+
+  databases = {
+    statetracker = {
+      sku = "Basic"
+    }
+  }
+
+  ip_whitelist = {
+    home = "79.85.156.31"
+  }
 }

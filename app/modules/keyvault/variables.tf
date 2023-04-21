@@ -1,5 +1,5 @@
 variable "name" {
-  description = "The name of the storage account"
+  description = "The name of the keyvault"
   type        = string
 }
 

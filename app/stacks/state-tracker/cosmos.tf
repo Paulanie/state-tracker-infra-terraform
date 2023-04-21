@@ -14,6 +14,10 @@ resource "azurerm_cosmosdb_sql_container" "amendments_container" {
   indexing_policy {
     indexing_mode = "consistent"
 
+    included_path {
+      path = "/*"
+    }
+
     composite_index {
       index {
         order = "Descending"
